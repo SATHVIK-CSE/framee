@@ -4,7 +4,8 @@ const path = require("node:path");
 const { PDFDocument } = require("pdfkit");
 
 const API_URL = "https://generativelanguage.googleapis.com/v1beta/interactions";
-const ENV_PATH = path.join(__dirname, ".env");
+const PROJECT_DIR = process.cwd();
+const ENV_PATH = path.join(PROJECT_DIR, ".env");
 
 function loadLocalEnv() {
   if (!fs.existsSync(ENV_PATH)) return;
@@ -204,7 +205,7 @@ const server = http.createServer(async (req, res) => {
       "x-content-type-options": "nosniff",
       "referrer-policy": "no-referrer"
     });
-    return fs.createReadStream(path.join(__dirname, "index.html")).pipe(res);
+    return fs.createReadStream(path.join(PROJECT_DIR, "index.html")).pipe(res);
   }
 
   if (req.method === "POST" && url.pathname === "/api/extract-pdf") {
